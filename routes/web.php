@@ -27,7 +27,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
-Route::post('companies/{company}/rate', RatingController::class)
+Route::post('companies/{company}/rate', [RatingController::class,'rate'])
     ->name('company.name');
 
 Route::resource('companies', CompanyController::class);

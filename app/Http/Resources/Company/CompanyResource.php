@@ -26,6 +26,7 @@ class CompanyResource extends JsonResource
             'url'   => $this->resource->url,
             'email' => $this->resource->email,
             '@loggedin' => Auth::check(),
+            "isAdmin"=> Auth::check() ? Auth::user()->is_admin : false,
 //            TODO: turn on once implemented
 //            'rating' => $this->resource->rating,
 //            'rating_count' => $this->resource->ratingCount,

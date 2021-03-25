@@ -19,13 +19,14 @@
         <div class="py-12">
 
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <jet-button
+                <jet-button v-if="isAdmin == '1'"
                     @click="showModal = true"
                 >
                     Add Company
                 </jet-button>
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <company-list
+                        :errors="$attrs.errors"
                         :companies="companies"
                         :max-rating="maxRating"
                         @load="loadCompanies"
@@ -35,7 +36,7 @@
             </div>
         </div>
 
-        <create-company  :showModal="showModal" @show-modal="changeModalStatus" />
+        <create-company :errors="$attrs.errors" :showModal="showModal" @show-modal="changeModalStatus" />
 
     </app-layout>
 </template>
@@ -58,6 +59,10 @@
                 companies: null,
                 dataUrl: route('companies.index'),
                 showModal:false,
+                isAdmin:false,
+
+
+
 
 
             }
@@ -66,12 +71,16 @@
             this.refreshCompanies();
         },
 
+
         methods: {
             loadCompanies(url) {
                 this.dataUrl = url;
                 axios.get(url)
                     .then((response) => {
-                        this.companies = response.data
+                        this.companies = response.data;
+                            this.isAdmin = this.companies.data[0].isAdmin
+
+
                     }).catch(error => {
                     console.log(error)
                 });
@@ -83,7 +92,8 @@
                 this.showModal = param;
             }
 
-        }
+        },
+
     }
 
 </script>

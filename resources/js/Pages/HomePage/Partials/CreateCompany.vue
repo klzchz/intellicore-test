@@ -14,6 +14,7 @@
             Company Name
         </jet-label>
             <jet-input v-model="data.name"/>
+            <jet-input-error  :message="errors.name ? errors.name : ''" class="mt-2" />
 
 
             <jet-label>
@@ -21,6 +22,7 @@
                 Web Site
             </jet-label>
             <jet-input v-model="data.url"/>
+            <jet-input-error  :message="errors.url ? errors.url : ''" class="mt-2" />
 
 
             <jet-label>
@@ -28,6 +30,7 @@
                 Email
             </jet-label>
             <jet-input v-model="data.email"/>
+            <jet-input-error  :message="errors.email ? errors.email : ''" class="mt-2" />
 
 
             <jet-label>
@@ -35,6 +38,7 @@
                 Phone
             </jet-label>
             <jet-input v-model="data.phone"/>
+            <jet-input-error  :message="errors.phone ? errors.phone : ''" class="mt-2" />
 
         </template>
 
@@ -79,13 +83,15 @@ export default {
     },
     props:{
         showModal:Boolean,
-        errorBag: Object,
+        errors: Object,
 
     },
     methods: {
             store() {
-                console.log(this.data);
-                this.$emit('show-modal',false);
+                if(!this.errors)
+                {
+                    this.$emit('show-modal',false);
+                }
                 this.$inertia.post('/companies',this.data);
             },
 

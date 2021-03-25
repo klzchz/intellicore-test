@@ -5,29 +5,28 @@
             Company Name
         </jet-label>
         <jet-input v-model="form.name"/>
-<!--        <jet-input-error :message="form.error('name')" class="mt-2" />-->
+        <jet-input-error  :message="errors.name ? errors.name : ''" class="mt-2" />
 
         <jet-label>
             <i class="fa fa-internet-explorer"/>
             Web Site
         </jet-label>
         <jet-input v-model="form.url"/>
-<!--        <jet-input-error :message="form.error('url')" class="mt-2" />-->
+        <jet-input-error  :message="errors.url ? errors.url : ''" class="mt-2" />
 
         <jet-label>
             <i class="fa fa-at"/>
             Email
         </jet-label>
         <jet-input v-model="form.email"/>
-<!--        <jet-input-error :message="form.error('email')" class="mt-2" />-->
-
+        <jet-input-error :message="errors.email ? errors.email : ''" class="mt-2" />
 
         <jet-label>
             <i class="fa fa-phone"/>
             Phone
         </jet-label>
         <jet-input v-model="form.phone"/>
-<!--        <jet-input-error :message="form.error('phone')" class="mt-2" />-->
+        <jet-input-error :message="errors.email ? errors.email : ''" class="mt-2" />
     </div>
 </template>
 
@@ -39,7 +38,8 @@
         name: "UpdateCompany",
         components: {JetInput, JetLabel, JetInputError},
         props: {
-            company: Object
+            company: Object,
+            errors:Object
         },
         data() {
             return {

@@ -25,7 +25,8 @@
                         <tbody class="bg-white divide-y divide-gray-200">
                             <company
                                 v-for="company in companyList"
-                                :max-rating="maxRating"
+                                :errors="errors"
+                                :max-rating="5"
                                 :company="company"
                                 @refreshCompanies="$emit('refreshCompanies')"
                                 :can-rate="canRate"
@@ -54,7 +55,8 @@
         props: {
             companies: Object,
             maxRating: Number,
-            canRate: Boolean
+            canRate: Boolean,
+            errors:Object
         },
         data(){
           return{
@@ -70,6 +72,9 @@
             },
             links() {
                 return _.get(this.companies, 'links')
+            },
+            canCreate(){
+                return _.get(this.companies, '@canCreate')
             }
         },
 

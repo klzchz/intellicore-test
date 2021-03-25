@@ -32,12 +32,12 @@
         </td>
         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
             <i
-                v-if="canEdit"
+                v-if="canEdit == '1'"
                 class="fa fa-edit pr-2 cursor-pointer"
                 @click="showModal = true"
             />
             <i
-                v-if="canDelete"
+                v-if="canDelete == '1'"
                 @click="deleteCompany"
                 class="fa fa-trash text-red-500 cursor-pointer"
             />
@@ -53,6 +53,7 @@
 
                 <update-company
                     ref="update"
+                    :errors="errors"
                     :company="company"
                 />
 
@@ -90,6 +91,7 @@
             company: Object,
             maxRating: Number,
             showModal: false,
+            errors:Object
 
         },
         data() {
@@ -125,6 +127,7 @@
             loggedin(){
                 return _.get(this.company, '@loggedin')
             }
+
         },
         methods: {
             storeRating(rating) {
