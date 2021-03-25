@@ -1,5 +1,6 @@
 <template>
     <tr>
+
         <td class="px-6 py-4 whitespace-nowrap">
             <div class="flex items-center">
                 <div class="ml-4">
@@ -20,7 +21,7 @@
         </td>
         <td class="px-6 py-4 whitespace-nowrap">
             <span class="px-2 inline-flex text-xs leading-5 font-semibold">
-                <rating
+                <rating v-if="loggedin"
                     :rating="company.rating"
                     :user-rating="userRating"
                     :max-rating="maxRating"
@@ -81,13 +82,15 @@
     import UpdateCompany from "@/Pages/HomePage/Partials/UpdateCompany";
     import JetButton from "@/Jetstream/Button";
     import SecondaryButton from "@/Jetstream/SecondaryButton";
+    import CreateCompany from "@/Pages/HomePage/Partials/CreateCompany";
     export default {
         name: "Company",
-        components: {SecondaryButton, JetButton, UpdateCompany, DialogModal, Modal, Rating},
+        components: {SecondaryButton, JetButton, UpdateCompany, DialogModal, Modal, Rating,CreateCompany},
         props: {
             company: Object,
             maxRating: Number,
             showModal: false,
+
         },
         data() {
             return {
@@ -118,6 +121,9 @@
             },
             canDelete() {
                 return _.get(this.company, '@canDelete')
+            },
+            loggedin(){
+                return _.get(this.company, '@loggedin')
             }
         },
         methods: {

@@ -25,6 +25,7 @@ class CompanyResource extends JsonResource
             'phone' => $this->resource->phone,
             'url'   => $this->resource->url,
             'email' => $this->resource->email,
+            '@loggedin' => Auth::check(),
 //            TODO: turn on once implemented
 //            'rating' => $this->resource->rating,
 //            'rating_count' => $this->resource->ratingCount,

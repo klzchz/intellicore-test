@@ -6,6 +6,8 @@
             </h2>
         </template>
 
+
+
 <!--        <div class="py-12">-->
 <!--            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">-->
 <!--                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">-->
@@ -15,7 +17,13 @@
 <!--        </div-->
 
         <div class="py-12">
+
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <jet-button
+                    @click="showModal = true"
+                >
+                    Add Company
+                </jet-button>
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <company-list
                         :companies="companies"
@@ -26,6 +34,9 @@
                 </div>
             </div>
         </div>
+
+        <create-company  :showModal="showModal" @show-modal="changeModalStatus" />
+
     </app-layout>
 </template>
 
@@ -34,9 +45,11 @@
     import CompanyList from "@/Pages/HomePage/Partials/CompanyList";
     import jetInput from "@/Jetstream/Input";
     import jetLabel from "@/Jetstream/Label";
+    import JetButton from'@/Jetstream/Button';
+    import CreateCompany from "@/Pages/HomePage/Partials/CreateCompany";
     export default {
         name: "HomePage",
-        components: {jetLabel, jetInput, CompanyList, AppLayout},
+        components: {jetLabel, jetInput, CompanyList, AppLayout,JetButton,CreateCompany},
         props: {
             maxRating: Number,
         },
@@ -44,6 +57,9 @@
             return {
                 companies: null,
                 dataUrl: route('companies.index'),
+                showModal:false,
+
+
             }
         },
         mounted() {
@@ -63,6 +79,10 @@
             refreshCompanies() {
                 this.loadCompanies(this.dataUrl)
             },
+            changeModalStatus(param){
+                this.showModal = param;
+            }
+
         }
     }
 
