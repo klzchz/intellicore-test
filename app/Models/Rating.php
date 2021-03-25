@@ -9,7 +9,7 @@ class Rating extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'rating'];
+    protected $fillable = ['user_id','company_id', 'rating'];
 
     public function user()
     {

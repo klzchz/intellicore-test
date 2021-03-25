@@ -47,11 +47,11 @@
                 return this.active && this.userRating == null && this.canRate
             },
             stars() {
-                if(this.userRating) {
-                    return this.userRating
-                }
                 if(this.rating) {
                     return this.rating
+                }
+                if(this.userRating) {
+                    return this.userRating
                 }
                 return 0;
             },

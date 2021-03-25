@@ -16484,12 +16484,12 @@ __webpack_require__.r(__webpack_exports__);
       return this.active && this.userRating == null && this.canRate;
     },
     stars: function stars() {
-      if (this.userRating) {
-        return this.userRating;
-      }
-
       if (this.rating) {
         return this.rating;
+      }
+
+      if (this.userRating) {
+        return this.userRating;
       }
 
       return 0;
@@ -17918,6 +17918,15 @@ __webpack_require__.r(__webpack_exports__);
     },
     loggedin: function loggedin() {
       return _.get(this.company, '@loggedin');
+    },
+    rating: function rating() {
+      return _.get(this.company, 'rating');
+    },
+    rating_count: function rating_count() {
+      return _.get(this.company, 'rating_count');
+    },
+    user_rating: function user_rating() {
+      return _.get(this.company, 'user_rating');
     }
   },
   methods: {
@@ -17925,7 +17934,9 @@ __webpack_require__.r(__webpack_exports__);
       this.userRating = rating;
       axios.post(this.company['@id'] + '/rate', {
         rating: rating
-      }).then(function (response) {})["catch"](function (error) {
+      }).then(function (response) {
+        console.log(response);
+      })["catch"](function (error) {
         console.log(error);
       });
     },
@@ -21775,7 +21786,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   /* TEXT, PROPS */
   , ["href"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_11, [$options.loggedin ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_rating, {
     key: 0,
-    rating: $props.company.rating,
+    rating: $options.rating,
     "user-rating": $data.userRating,
     "max-rating": $props.maxRating,
     onStoreRating: $options.storeRating,
@@ -21913,7 +21924,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" This example requires Tailwind CSS v2.0+ "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", _hoisted_7, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.companyList, function (company) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_company, {
       errors: $props.errors,
-      "max-rating": 5,
+      "max-rating": $props.maxRating,
       company: company,
       onRefreshCompanies: _cache[1] || (_cache[1] = function ($event) {
         return _ctx.$emit('refreshCompanies');
@@ -21922,7 +21933,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       key: company['@id']
     }, null, 8
     /* PROPS */
-    , ["errors", "company", "can-rate"]);
+    , ["errors", "max-rating", "company", "can-rate"]);
   }), 128
   /* KEYED_FRAGMENT */
   ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_pagination, {

@@ -22,7 +22,7 @@
         <td class="px-6 py-4 whitespace-nowrap">
             <span class="px-2 inline-flex text-xs leading-5 font-semibold">
                 <rating v-if="loggedin"
-                    :rating="company.rating"
+                    :rating="rating"
                     :user-rating="userRating"
                     :max-rating="maxRating"
                     @storeRating="storeRating"
@@ -126,14 +126,25 @@
             },
             loggedin(){
                 return _.get(this.company, '@loggedin')
-            }
+            },
+            rating(){
+                return _.get(this.company, 'rating')
+            },
+            rating_count(){
+                return _.get(this.company, 'rating_count')
+            },
+            user_rating(){
+                return _.get(this.company, 'user_rating')
+            },
 
         },
         methods: {
             storeRating(rating) {
                 this.userRating = rating
                 axios.post(this.company['@id'] + '/rate',{rating})
-                .then(response => {})
+                .then(response => {
+                    console.log(response)
+                })
                 .catch(error => {
                     console.log(error)
                 })

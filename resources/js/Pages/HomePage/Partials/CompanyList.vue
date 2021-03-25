@@ -26,7 +26,7 @@
                             <company
                                 v-for="company in companyList"
                                 :errors="errors"
-                                :max-rating="5"
+                                :max-rating="maxRating"
                                 :company="company"
                                 @refreshCompanies="$emit('refreshCompanies')"
                                 :can-rate="canRate"
