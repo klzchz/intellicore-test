@@ -24,11 +24,24 @@ class CompanyController extends Controller
      */
     public function index(Request $request)
     {
-        $companies = Company::query()
-            ->with('ratings')
-            ->paginate($request->get('per_page', 10));
+        if($request->search)
+        {
+            $companies = Company::where('name','like',"%{$request->search}%")
+                ->orWhere('url','like',"%{$request->search}%")
+                ->orWhere('email','like',"%{$request->search}%")
+                ->orWhere('phone','like',"%{$request->search}%")
+                ->with('ratings')
+                ->paginate($request->get('per_page', 10));
+        }else{
+            $companies = Company::query()
+                ->with('ratings')
+                ->paginate($request->get('per_page', 10));
+        }
+
+
 
         return new CompanyCollection($companies);
+
     }
 
     /**
@@ -99,5 +112,15 @@ class CompanyController extends Controller
         }
 
         $manager->deleteCompany($company);
+    }
+
+    public function freeApi()
+    {
+        $companies = Company::query()
+            ->with('ratings')
+            ->paginate(10);
+
+        return response()->json($companies);
+
     }
 }

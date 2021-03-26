@@ -6,15 +6,7 @@
             </h2>
         </template>
 
-
-
-<!--        <div class="py-12">-->
-<!--            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">-->
-<!--                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">-->
-<!--                     TODO: Add Search inputs here -->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div-->
+        <search @search="searchMethod"/>
 
         <div class="py-12">
 
@@ -24,6 +16,8 @@
                 >
                     Add Company
                 </jet-button>
+
+
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <company-list
                         :errors="$attrs.errors"
@@ -44,52 +38,63 @@
 <script>
     import AppLayout from "../../Layouts/AppLayout";
     import CompanyList from "@/Pages/HomePage/Partials/CompanyList";
-    import jetInput from "@/Jetstream/Input";
+    import JetInput from "@/Jetstream/Input";
     import jetLabel from "@/Jetstream/Label";
     import JetButton from'@/Jetstream/Button';
     import CreateCompany from "@/Pages/HomePage/Partials/CreateCompany";
+    import Search from "@/Pages/HomePage/Search";
     export default {
         name: "HomePage",
-        components: {jetLabel, jetInput, CompanyList, AppLayout,JetButton,CreateCompany},
+        components: {jetLabel, JetInput, CompanyList, AppLayout,JetButton,CreateCompany,Search},
         props: {
             maxRating: Number,
         },
         data() {
             return {
                 companies: null,
-                dataUrl: route('companies.index'),
+                dataUrl: route('companies.index',this.data),
                 showModal:false,
                 isAdmin:false,
-
-
-
-
+                search:'',
 
             }
         },
-        mounted() {
+        created() {
             this.refreshCompanies();
         },
 
 
         methods: {
-            loadCompanies(url) {
+            loadCompanies(url,param = null) {
                 this.dataUrl = url;
-                axios.get(url)
-                    .then((response) => {
-                        this.companies = response.data;
-                            this.isAdmin = this.companies.data[0].isAdmin
+
+                axios.get(url,{
+                    params:{
+                     search: param,
+                    },
+
+                }) .then((response) => {
+                    console.log(response);
+                    this.companies = response.data;
+                    this.isAdmin = this.companies.data[0].isAdmin;
 
 
-                    }).catch(error => {
+                }).catch(error => {
                     console.log(error)
                 });
+
             },
-            refreshCompanies() {
-                this.loadCompanies(this.dataUrl)
+            refreshCompanies(param=null) {
+                this.loadCompanies(this.dataUrl,param)
             },
             changeModalStatus(param){
                 this.showModal = param;
+            },
+            searchMethod(param){
+                this.companies = null;
+                // alert(param);
+                this.refreshCompanies(param);
+
             }
 
         },
