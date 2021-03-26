@@ -70,7 +70,8 @@
 
                 axios.get(url,{
                     params:{
-                     search: param,
+                     search: param.search,
+                    radio: param.radio
                     },
 
                 }) .then((response) => {

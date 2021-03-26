@@ -26,11 +26,21 @@ class CompanyController extends Controller
     {
         if($request->search)
         {
-            $companies = Company::where('name','like',"%{$request->search}%")
+            $companies = Company::
+                 join('ratings', 'ratings.company_id', '=', 'companies.id')
+                ->where('name','like',"%{$request->search}%")
                 ->orWhere('url','like',"%{$request->search}%")
                 ->orWhere('email','like',"%{$request->search}%")
                 ->orWhere('phone','like',"%{$request->search}%")
-                ->with('ratings')
+                ->orWhere(function($query) use($request){
+                        if($request->min){
+                            $query->min('ratings.rating');
+                        }
+
+                    if($request->min){
+                        $query->min('ratings.rating');
+                    }
+                })
                 ->paginate($request->get('per_page', 10));
         }else{
             $companies = Company::query()
